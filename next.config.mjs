@@ -3,6 +3,9 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
-};
+  images: {
+    formats: ['image/avif', 'image/webp'],
+  },
+}
 
-export default nextConfig;
+export default nextConfig

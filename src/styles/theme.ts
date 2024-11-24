@@ -1,7 +1,10 @@
 const theme = {
   black: '#171717',
   white: '#ffffff',
+  kakao_bg: '#FEE500',
+
   gray_scale: {
+    gray_30: '#f9f9f9',
     gray_50: '#f4f4f4',
     gray_100: '#dadada',
     gray_200: '#B4B4B4',
@@ -25,6 +28,18 @@ const theme = {
     green_800: '#005434',
     green_900: '#002A1A',
   },
-};
+  red_scale: {
+    red_50: '#FFF6F7',
+    red_100: '#FDDADE',
+    red_200: '#FBB5BD',
+    red_300: '#FF95A1',
+    red_400: '#FF6D7D',
+    red_500: '#F6475A',
+    red_600: '#CD2E3F',
+    red_700: '#871925',
+    red_800: '#621C24',
+    red_900: '#310E12',
+  },
+}
 
-export default theme;
+export default theme

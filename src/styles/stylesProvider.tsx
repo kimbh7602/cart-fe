@@ -1,15 +1,24 @@
-'use client';
+'use client'
 
-import { ThemeProvider } from 'styled-components';
-import StyledComponentsRegistry from '@/lib/registry';
-import GlobalStyles from '@/styles/globalStyles';
-import theme from '@/styles/theme';
+import { ThemeProvider } from 'styled-components'
+import { Provider, createStore } from 'jotai'
+import StyledComponentsRegistry from '@/lib/registry'
+import * as S from '@/styles/globalStyles'
+import theme from '@/styles/theme'
 
-export default function StylesProvider({ children }: { children: React.ReactNode }) {
+const StylesProvider = ({ children }: { children: React.ReactNode }) => {
+  const store = createStore()
+
   return (
     <StyledComponentsRegistry>
-      <GlobalStyles />
-      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+      <S.GlobalStyles />
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <S.Container>{children}</S.Container>
+        </ThemeProvider>
+      </Provider>
     </StyledComponentsRegistry>
-  );
+  )
 }
+
+export default StylesProvider
