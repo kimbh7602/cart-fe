@@ -20,6 +20,13 @@ export const fetchData = async (action: ActionType) => {
   return response
 }
 
+export const login = async (action: ActionType) => {
+  const { url } = action
+  const headers = { accept: 'application/json;charset=UTF-8', withCredentials: true }
+  const response = await api().get(url, { headers })
+  return response
+}
+
 export const postData = (action: ActionType) => {
   const { url, body, query } = action
   const headers = getRequestHeaders(action)

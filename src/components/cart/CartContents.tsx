@@ -355,7 +355,7 @@ const CartContents = ({
       console.log(e)
       setIsLoading(false)
     }
-  }, [id, setIsLoading])
+  }, [accessToken, id, setIsLoading])
 
   useEffect(() => {
     if (id) {
