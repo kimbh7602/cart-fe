@@ -32,7 +32,6 @@ const Basket = ({ basket, getBaskets, getTemplate, accessToken }: IProps) => {
         accessToken: accessToken,
       })
 
-      console.log(data)
       getBaskets()
       getTemplate()
       setIsLoading(false)
@@ -50,9 +49,9 @@ const Basket = ({ basket, getBaskets, getTemplate, accessToken }: IProps) => {
     <S.BasketWrapper>
       <S.BasketLeft onClick={checkBasket}>
         {basket?.checked ? (
-          <Image src='/basket-checked.svg' alt='basket' width={24} height={24} />
+          <Image src='/checkbox-active.svg' alt='basket' width={24} height={24} />
         ) : (
-          <Image src='/basket.svg' alt='basket' width={24} height={24} />
+          <Image src='/checkbox.svg' alt='basket' width={24} height={24} />
         )}
         <h4>{basket?.name}</h4>
       </S.BasketLeft>

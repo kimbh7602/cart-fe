@@ -1,12 +1,11 @@
 'use client'
 
-import { deleteData, fetchData } from '@/api'
+import { fetchData } from '@/api'
 import WriteComponent from '@/components/basket/WriteComponent'
 import WriteHeader from '@/components/layout/WriteHeader'
 import { BASE_API } from '@/constants'
-import { IBasket, ITemplate } from '@/types'
-import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { IBasket } from '@/types'
+import { useCallback, useEffect, useState } from 'react'
 import { useAtom } from 'jotai'
 import { isLoadingAtom } from '@/store'
 import Loader from '@/components/common/Loader'
@@ -18,12 +17,11 @@ interface PageProps {
 }
 
 const Write = ({ params }: PageProps) => {
-  const router = useRouter()
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
   const [basket, setBasket] = useState<IBasket | null>(null)
   const [isLoading, setIsLoading] = useAtom(isLoadingAtom)
 
-  const getTemplate = async () => {
+  const getTemplate = useCallback(async () => {
     setIsLoading(true)
     try {
       const { data } = await fetchData({
@@ -36,13 +34,13 @@ const Write = ({ params }: PageProps) => {
       console.log(e)
       setIsLoading(false)
     }
-  }
+  }, [params?.id, setIsLoading])
 
   useEffect(() => {
     if (params?.id) {
       getTemplate()
     }
-  }, [params?.id])
+  }, [getTemplate, params?.id])
 
   return (
     <>

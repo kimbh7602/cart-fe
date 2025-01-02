@@ -7,6 +7,8 @@ import { BASE_API } from '@/constants'
 import { ITemplate } from '@/types'
 import { useAtom } from 'jotai'
 import { isLoadingAtom } from '@/store'
+import { useRouter } from 'next/navigation'
+import { CART } from '@/routes'
 
 interface IProps {
   list: Array<ITemplate>
@@ -15,6 +17,7 @@ interface IProps {
 }
 
 const AddButton = ({ list, setList, accessToken }: IProps) => {
+  const router = useRouter()
   const [, setIsLoading] = useAtom(isLoadingAtom)
 
   const addCart = async () => {
@@ -26,6 +29,7 @@ const AddButton = ({ list, setList, accessToken }: IProps) => {
       })
 
       setList([data?.result, ...list])
+      router.push(`${CART}/${data?.result?.id}`)
       setIsLoading(false)
     } catch (e) {
       setIsLoading(false)

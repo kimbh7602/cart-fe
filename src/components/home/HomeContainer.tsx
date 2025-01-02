@@ -2,7 +2,7 @@
 
 import Empty from '@/components/home/Empty'
 import HomeComponent from '@/components/home/Home'
-import { useEffect, useLayoutEffect, useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
 import { fetchData } from '@/api'
 import { BASE_API } from '@/constants'
 import _ from 'lodash'
@@ -11,13 +11,17 @@ import { ITemplate } from '@/types'
 import { useAtom } from 'jotai'
 import { isLoadingAtom } from '@/store'
 import Loader from '@/components/common/Loader'
+import { getTokens } from '@/utils'
+import useCheckToken from '@/hooks/useCheckToken'
 
 const PREVIEW_COUNT = 3
 
-const HomeContainer = ({ accessToken }: { accessToken: string | undefined }) => {
+const HomeContainer = () => {
   const [list, setList] = useState<Array<ITemplate>>([])
   const [isLoading, setIsLoading] = useAtom(isLoadingAtom)
   const [isLoaded, setIsLoaded] = useState(false)
+  const { accessToken } = getTokens()
+  const { checkToken } = useCheckToken()
 
   const getTemplates = async () => {
     setIsLoading(true)
@@ -30,8 +34,9 @@ const HomeContainer = ({ accessToken }: { accessToken: string | undefined }) => 
       setList(data?.result)
       setIsLoading(false)
       setIsLoaded(true)
-    } catch (e) {
+    } catch (e: any) {
       console.log(e)
+      checkToken(e?.response?.data?.code)
       setIsLoading(false)
       setIsLoaded(true)
     }
