@@ -10,19 +10,22 @@ import { ITemplate } from '@/types'
 import { useAtom } from 'jotai'
 import { isLoadingAtom } from '@/store'
 import Loader from '@/components/common/Loader'
+import useCheckToken from '@/hooks/useCheckToken'
+import { getTokens } from '@/utils'
 
 interface IProps {
   id: string
-  accessToken: string | undefined
 }
 
-const CartContainer = ({ id, accessToken }: IProps) => {
+const CartContainer = ({ id }: IProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const [isShareOpen, setIsShareOpen] = useState(false)
   const [isReCartOpen, setIsReCartOpen] = useState(false)
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
   const [template, setTemplate] = useState<ITemplate | null>(null)
   const [isLoading, setIsLoading] = useAtom(isLoadingAtom)
+  const { accessToken } = getTokens()
+  const { checkToken } = useCheckToken()
 
   const getTemplate = async () => {
     setIsLoading(true)
@@ -34,8 +37,9 @@ const CartContainer = ({ id, accessToken }: IProps) => {
 
       setTemplate(data?.result)
       setIsLoading(false)
-    } catch (e) {
+    } catch (e: any) {
       console.log(e)
+      checkToken(e?.response?.data?.code)
       setIsLoading(false)
     }
   }
@@ -62,7 +66,6 @@ const CartContainer = ({ id, accessToken }: IProps) => {
         setIsReCartOpen={setIsReCartOpen}
         isDeleteOpen={isDeleteOpen}
         setIsDeleteOpen={setIsDeleteOpen}
-        accessToken={accessToken}
       />
       {isLoading && <Loader />}
     </>

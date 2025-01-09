@@ -23,23 +23,8 @@ import { HOME } from '@/routes'
 import { useAtom } from 'jotai'
 import { isLoadingAtom } from '@/store'
 import { toast } from 'react-toastify'
-import { cautionToast, successToast } from '@/utils'
-
-const DUMMY_CATEGORIES = [
-  { idx: 1, label: '전체', value: 'all' },
-  { idx: 2, label: '카테고리1', value: 'first' },
-  { idx: 3, label: '카테고리2', value: 'second' },
-  { idx: 4, label: '카테고리3', value: 'third' },
-  { idx: 5, label: '카테고리4', value: 'forth' },
-  { idx: 6, label: '카테고리5', value: 'fifth' },
-]
-
-const DUMMY_BASKETS = [
-  { name: '상품명1', count: 10 },
-  { name: '상품명2', count: 3 },
-  { name: '상품명3', count: 999 },
-  { name: '상품명4', count: 1000 },
-]
+import { cautionToast, getTokens, successToast } from '@/utils'
+import useCheckToken from '@/hooks/useCheckToken'
 
 const PLACE_HOLDER = '상품명을 입력해 주세요'
 
@@ -55,7 +40,6 @@ interface ICartContents {
   setIsReCartOpen: (args: boolean) => void
   isDeleteOpen: boolean
   setIsDeleteOpen: (args: boolean) => void
-  accessToken: string | undefined
 }
 
 const SIZE = 100
@@ -72,7 +56,6 @@ const CartContents = ({
   setIsReCartOpen,
   isDeleteOpen,
   setIsDeleteOpen,
-  accessToken,
 }: ICartContents) => {
   const router = useRouter()
   const [selectedCategory, setSelectedCategory] = useState<ICategories | null>(null)
@@ -88,19 +71,22 @@ const CartContents = ({
   const [keywords, setKeywords] = useState<Array<IKeyword>>([])
   const [categories, setCategories] = useState<Array<ICategories>>([])
   const [, setIsLoading] = useAtom(isLoadingAtom)
+  const { accessToken } = getTokens()
+  const { checkToken } = useCheckToken()
 
   const getBaskets = useCallback(async () => {
     setIsLoading(true)
     try {
       const { data } = await fetchData({
-        url: `${BASE_API}/basket?templateId=${id}`,
+        url: `${BASE_API}/baskets?templateId=${id}`,
         accessToken: accessToken,
       })
 
       setBaskets(data?.result)
       setIsLoading(false)
-    } catch (e) {
+    } catch (e: any) {
       console.log(e)
+      checkToken(e?.response?.data?.code)
       setIsLoading(false)
     }
   }, [id, setIsLoading])
@@ -115,8 +101,9 @@ const CartContents = ({
 
       setBaskets(data?.result)
       setIsLoading(false)
-    } catch (e) {
+    } catch (e: any) {
       console.log(e)
+      checkToken(e?.response?.data?.code)
       setIsLoading(false)
     }
   }, [id, selectedCategory?.id, setIsLoading])
@@ -169,8 +156,9 @@ const CartContents = ({
 
       console.log(data)
       setKeywords(data?.result)
-    } catch (e) {
+    } catch (e: any) {
       console.log(e)
+      checkToken(e?.response?.data?.code)
     }
   }, [basket?.name])
 
@@ -351,8 +339,9 @@ const CartContents = ({
 
       setCategories(data?.result)
       setIsLoading(false)
-    } catch (e) {
+    } catch (e: any) {
       console.log(e)
+      checkToken(e?.response?.data?.code)
       setIsLoading(false)
     }
   }, [accessToken, id, setIsLoading])
@@ -435,13 +424,7 @@ const CartContents = ({
 
         <S.BasketsWrapper>
           {baskets?.map((basket, index) => (
-            <Basket
-              key={index}
-              basket={basket}
-              getBaskets={getBaskets}
-              getTemplate={getTemplate}
-              accessToken={accessToken}
-            />
+            <Basket key={index} basket={basket} getBaskets={getBaskets} getTemplate={getTemplate} />
           ))}
         </S.BasketsWrapper>
       </S.CartContentsWrapper>

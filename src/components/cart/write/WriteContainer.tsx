@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react'
 import { useAtom } from 'jotai'
 import { isLoadingAtom } from '@/store'
 import Loader from '@/components/common/Loader'
+import useCheckToken from '@/hooks/useCheckToken'
 
 interface IProps {
   id: string
@@ -18,6 +19,7 @@ interface IProps {
 const WriteContainer = ({ id, accessToken }: IProps) => {
   const [template, setTemplate] = useState<ITemplate | null>(null)
   const [isLoading, setIsLoading] = useAtom(isLoadingAtom)
+  const { checkToken } = useCheckToken()
 
   const getTemplate = async () => {
     setIsLoading(true)
@@ -29,8 +31,9 @@ const WriteContainer = ({ id, accessToken }: IProps) => {
 
       setTemplate(data?.result)
       setIsLoading(false)
-    } catch (e) {
+    } catch (e: any) {
       console.log(e)
+      checkToken(e?.response?.data?.code)
       setIsLoading(false)
     }
   }
@@ -44,7 +47,7 @@ const WriteContainer = ({ id, accessToken }: IProps) => {
   return (
     <>
       <WriteHeader />
-      <WriteComponent id={id} template={template} accessToken={accessToken} />
+      <WriteComponent id={id} template={template} />
       {isLoading && <Loader />}
     </>
   )

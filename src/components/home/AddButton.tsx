@@ -9,16 +9,17 @@ import { useAtom } from 'jotai'
 import { isLoadingAtom } from '@/store'
 import { useRouter } from 'next/navigation'
 import { CART } from '@/routes'
+import { getTokens } from '@/utils'
 
 interface IProps {
   list: Array<ITemplate>
   setList: (args: Array<ITemplate>) => void
-  accessToken: string | undefined
 }
 
-const AddButton = ({ list, setList, accessToken }: IProps) => {
+const AddButton = ({ list, setList }: IProps) => {
   const router = useRouter()
   const [, setIsLoading] = useAtom(isLoadingAtom)
+  const { accessToken } = getTokens()
 
   const addCart = async () => {
     setIsLoading(true)

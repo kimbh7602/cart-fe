@@ -8,17 +8,20 @@ import { useRouter } from 'next/navigation'
 import { BASKET } from '@/routes'
 import { useAtom } from 'jotai'
 import { isLoadingAtom } from '@/store'
+import useCheckToken from '@/hooks/useCheckToken'
+import { getTokens } from '@/utils'
 
 interface IProps {
   basket: IBasket
   getBaskets: () => void
   getTemplate: () => void
-  accessToken: string | undefined
 }
 
-const Basket = ({ basket, getBaskets, getTemplate, accessToken }: IProps) => {
+const Basket = ({ basket, getBaskets, getTemplate }: IProps) => {
   const router = useRouter()
   const [, setIsLoading] = useAtom(isLoadingAtom)
+  const { accessToken } = getTokens()
+  const { checkToken } = useCheckToken()
 
   const checkBasket = async () => {
     setIsLoading(true)
@@ -35,8 +38,9 @@ const Basket = ({ basket, getBaskets, getTemplate, accessToken }: IProps) => {
       getBaskets()
       getTemplate()
       setIsLoading(false)
-    } catch (e) {
+    } catch (e: any) {
       console.log(e)
+      checkToken(e?.response?.data?.code)
       setIsLoading(false)
     }
   }

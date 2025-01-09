@@ -9,6 +9,8 @@ import { useCallback, useEffect, useState } from 'react'
 import { useAtom } from 'jotai'
 import { isLoadingAtom } from '@/store'
 import Loader from '@/components/common/Loader'
+import { getTokens } from '@/utils'
+import useCheckToken from '@/hooks/useCheckToken'
 
 interface PageProps {
   params: {
@@ -20,18 +22,22 @@ const Write = ({ params }: PageProps) => {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
   const [basket, setBasket] = useState<IBasket | null>(null)
   const [isLoading, setIsLoading] = useAtom(isLoadingAtom)
+  const { accessToken } = getTokens()
+  const { checkToken } = useCheckToken()
 
   const getTemplate = useCallback(async () => {
     setIsLoading(true)
     try {
       const { data } = await fetchData({
-        url: `${BASE_API}/basket/${params?.id}`,
+        url: `${BASE_API}/baskets/${params?.id}`,
+        accessToken: accessToken,
       })
 
       setBasket(data?.result)
       setIsLoading(false)
-    } catch (e) {
+    } catch (e: any) {
       console.log(e)
+      checkToken(e?.response?.data?.code)
       setIsLoading(false)
     }
   }, [params?.id, setIsLoading])

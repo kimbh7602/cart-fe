@@ -11,19 +11,19 @@ import { putData } from '@/api'
 import { BASE_API } from '@/constants'
 import { useRouter } from 'next/navigation'
 import { CART } from '@/routes'
-import { cautionToast, getIconSrc, successToast } from '@/utils'
+import { cautionToast, getIconSrc, getTokens, successToast } from '@/utils'
 
 interface IProps {
   id: string
   template: ITemplate | null
-  accessToken: string | undefined
 }
 
-const WriteComponent = ({ id, template, accessToken }: IProps) => {
+const WriteComponent = ({ id, template }: IProps) => {
   const router = useRouter()
   const [name, setName] = useState('')
   const [selectedIcon, setSelectedIcon] = useState(1)
   const [, setIsLoading] = useAtom(isLoadingAtom)
+  const { accessToken } = getTokens()
 
   const ICON_LIST = Array.from({ length: 16 }, (_, i) => i + 1)
 

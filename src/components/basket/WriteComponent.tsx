@@ -70,7 +70,7 @@ const WriteComponent = ({ id, basket, isDeleteOpen, setIsDeleteOpen }: IProps) =
     setIsLoading(true)
     try {
       await deleteData({
-        url: `${BASE_API}/basket/${id}`,
+        url: `${BASE_API}/baskets/${id}`,
       })
 
       successToast(`${name} 삭제 완료`)

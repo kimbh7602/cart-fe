@@ -49,7 +49,7 @@ const HomeContainer = () => {
   return (
     <>
       {_.isEmpty(list) ? <Empty /> : <HomeComponent list={list} />}
-      <AddButton list={list} setList={setList} accessToken={accessToken} />
+      <AddButton list={list} setList={setList} />
       {isLoading && <Loader />}
     </>
   )
