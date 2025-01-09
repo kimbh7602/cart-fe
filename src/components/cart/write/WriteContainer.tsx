@@ -10,15 +10,16 @@ import { useAtom } from 'jotai'
 import { isLoadingAtom } from '@/store'
 import Loader from '@/components/common/Loader'
 import useCheckToken from '@/hooks/useCheckToken'
+import { getTokens } from '@/utils'
 
 interface IProps {
   id: string
-  accessToken: string | undefined
 }
 
-const WriteContainer = ({ id, accessToken }: IProps) => {
+const WriteContainer = ({ id }: IProps) => {
   const [template, setTemplate] = useState<ITemplate | null>(null)
   const [isLoading, setIsLoading] = useAtom(isLoadingAtom)
+  const { accessToken } = getTokens()
   const { checkToken } = useCheckToken()
 
   const getTemplate = async () => {

@@ -1,5 +1,4 @@
 import WriteContainer from '@/components/cart/write/WriteContainer'
-import { cookies } from 'next/headers'
 
 interface PageProps {
   params: {
@@ -8,9 +7,7 @@ interface PageProps {
 }
 
 const Write = ({ params }: PageProps) => {
-  const accessToken = cookies().get('accessToken')
-
-  return <WriteContainer id={params?.id} accessToken={accessToken?.value} />
+  return <WriteContainer id={params?.id} />
 }
 
 export default Write
