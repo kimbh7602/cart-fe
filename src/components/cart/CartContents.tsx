@@ -139,6 +139,7 @@ const CartContents = ({
         })
         getBaskets()
         getTemplate()
+        getCategories()
       }
       setIsLoading(false)
     } catch (e) {
@@ -162,8 +163,37 @@ const CartContents = ({
     }
   }, [basket?.name])
 
-  const handleClickKeyword = (keyword: { name: string; category: string }) => {
-    setBasket({ ...basket, name: keyword?.name, categoryName: keyword?.category })
+  const handleClickKeyword = async (keyword: { name: string; category: string }) => {
+    setIsLoading(true)
+    try {
+      const { data } = await postData({
+        url: `${BASE_API}/basket`,
+        body: {
+          templateId: Number(id),
+          name: keyword?.name,
+          categoryName: keyword?.category,
+          count: basket?.count,
+        },
+        accessToken: accessToken,
+      })
+
+      if (data?.result) {
+        successToast(`${keyword?.name} 담기 완료`)
+        setBasket({
+          name: '',
+          categoryName: '기타',
+          count: 1,
+        })
+        getBaskets()
+        getTemplate()
+        getCategories()
+      }
+      setIsLoading(false)
+    } catch (e) {
+      cautionToast(`${basket?.name} 담기 실패`)
+      setIsLoading(false)
+    }
+    // setBasket({ ...basket, name: keyword?.name, categoryName: keyword?.category })
   }
 
   const handleAddBasket = (event: React.KeyboardEvent<HTMLInputElement>) => {
