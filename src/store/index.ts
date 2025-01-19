@@ -7,4 +7,8 @@ export const modalAtom = atom(false)
 export const bottomModalAtom = atom(false)
 export const bottomModalListAtom = atom([])
 
-export const iamAtom = atom(null)
+export const iamAtom = atom({
+  id: 0,
+  provider: '',
+  email: '',
+})

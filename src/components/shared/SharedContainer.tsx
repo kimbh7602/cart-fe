@@ -75,7 +75,7 @@ const SharedContainer = ({ id }: IProps) => {
         basket={basket}
         setBasket={setBasket}
       />
-      <BottomSheet id={id} />
+      <BottomSheet id={id} template={template} />
       {isLoading && <Loader />}
     </>
   )

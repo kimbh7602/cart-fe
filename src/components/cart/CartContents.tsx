@@ -395,6 +395,33 @@ const CartContents = ({
     }
   }, [accessToken, id, setIsLoading])
 
+  const onClickCheckAll = async () => {
+    setIsLoading(true)
+    try {
+      await putData({
+        url: `${BASE_API}/basket/check/all`,
+        body: {
+          templateId: template?.id,
+        },
+        accessToken: accessToken,
+      })
+
+      if (selectedCategory) {
+        getCategoryBaskets()
+      } else {
+        getBaskets()
+      }
+      getTemplate()
+      setIsOpen(false)
+      setIsLoading(false)
+    } catch (e: any) {
+      console.log(e)
+      checkToken(e?.response?.data?.code)
+      setIsOpen(false)
+      setIsLoading(false)
+    }
+  }
+
   useEffect(() => {
     if (id) {
       getBaskets()
@@ -491,6 +518,7 @@ const CartContents = ({
           onClickShare={onClickShare}
           onClickReCart={onClickReCart}
           onClickDelete={onClickDelete}
+          onClickCheckAll={onClickCheckAll}
         />
       )}
       {isShareOpen && (

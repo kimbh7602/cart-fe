@@ -61,6 +61,7 @@ export const CartTitleButtons = styled.div`
     line-height: 20px;
     letter-spacing: -0.2px;
     padding: 8px;
+    cursor: pointer;
   }
 
   > div {

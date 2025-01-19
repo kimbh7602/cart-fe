@@ -78,6 +78,7 @@ export const ContentWrapper = styled.div<{ $isShared?: boolean }>`
   gap: 16px;
   width: 100%;
   padding: 8px;
+  cursor: pointer;
 `
 
 export const ProgressCircle = styled.div<{ $value: number }>`

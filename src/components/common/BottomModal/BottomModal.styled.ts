@@ -43,6 +43,10 @@ export const TitleWrapper = styled.div`
     line-height: 22px;
     letter-spacing: -0.6px;
   }
+
+  img {
+    cursor: pointer;
+  }
 `
 
 export const List = styled.ul`
@@ -57,6 +61,7 @@ export const ListItem = styled.li<{ $isRed?: boolean }>`
   align-items: center;
   gap: 8px;
   padding: 8px;
+  cursor: pointer;
 
   p {
     color: ${({ $isRed, theme }) => ($isRed ? theme.red_scale.red_500 : theme.black)};

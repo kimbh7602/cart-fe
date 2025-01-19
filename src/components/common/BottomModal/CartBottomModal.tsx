@@ -10,9 +10,17 @@ interface IProps {
   onClickShare: () => void
   onClickReCart: () => void
   onClickDelete: () => void
+  onClickCheckAll: () => void
 }
 
-const BottomModal = ({ template, onClickClose, onClickShare, onClickReCart, onClickDelete }: IProps) => {
+const BottomModal = ({
+  template,
+  onClickClose,
+  onClickShare,
+  onClickReCart,
+  onClickDelete,
+  onClickCheckAll,
+}: IProps) => {
   return (
     <S.Wrapper>
       <S.BottomModalWrapper>
@@ -30,7 +38,7 @@ const BottomModal = ({ template, onClickClose, onClickShare, onClickReCart, onCl
               <Image src='/basket.svg' alt='basket' width={24} height={24} />
               <p>다시 장보기</p>
             </S.ListItem>
-            <S.ListItem>
+            <S.ListItem onClick={onClickCheckAll}>
               <Image src='/success.svg' alt='success' width={24} height={24} />
               <p>담긴 리스트 모두 완료하기</p>
             </S.ListItem>
