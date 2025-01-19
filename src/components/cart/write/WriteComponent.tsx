@@ -28,7 +28,13 @@ const WriteComponent = ({ id, template }: IProps) => {
   const ICON_LIST = Array.from({ length: 16 }, (_, i) => i + 1)
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setName(event?.target?.value)
+    let value = event?.target?.value
+
+    if (value?.length > 30) {
+      value = value?.slice(0, 30)
+    }
+
+    setName(value)
   }
 
   const handleSubmitTemplate = async () => {

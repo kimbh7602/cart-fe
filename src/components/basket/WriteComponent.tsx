@@ -11,7 +11,8 @@ import { useRouter } from 'next/navigation'
 import DeleteBasketBottomModal from '../common/BottomModal/DeleteBasketBottomModal'
 import { useAtom } from 'jotai'
 import { isLoadingAtom } from '@/store'
-import { cautionToast, successToast } from '@/utils'
+import { cautionToast, getTokens, successToast } from '@/utils'
+import useCheckToken from '@/hooks/useCheckToken'
 
 interface IProps {
   id: string
@@ -27,6 +28,8 @@ const WriteComponent = ({ id, basket, isDeleteOpen, setIsDeleteOpen }: IProps) =
   const [name, setName] = useState('')
   const [count, setCount] = useState(1)
   const [, setIsLoading] = useAtom(isLoadingAtom)
+  const { accessToken } = getTokens()
+  const { checkToken } = useCheckToken()
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event?.target?.value)
@@ -92,13 +95,15 @@ const WriteComponent = ({ id, basket, isDeleteOpen, setIsDeleteOpen }: IProps) =
           count: count,
           basketId: id,
         },
+        accessToken: accessToken,
       })
 
       successToast(`${name} 수정 완료`)
       router.back()
       setIsLoading(false)
-    } catch (e) {
+    } catch (e: any) {
       cautionToast('수정에 실패했어요')
+      checkToken(e?.response?.data?.code)
       setIsLoading(false)
     }
   }

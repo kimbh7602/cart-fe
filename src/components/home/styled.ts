@@ -38,7 +38,7 @@ export const EmptyText = styled.p`
   letter-spacing: -0.2px;
 `
 
-export const AdWrapper = styled.div`
+export const AdWrapper = styled.a`
   display: grid;
   grid-template-columns: 36px auto 24px;
   align-items: center;

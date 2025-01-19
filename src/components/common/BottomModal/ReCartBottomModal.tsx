@@ -2,23 +2,22 @@
 
 import Image from 'next/image'
 import * as S from './BottomModal.styled'
-import { useAtom } from 'jotai'
-import { bottomModalAtom, bottomModalListAtom } from '@/store'
-import { IBottomModal } from '@/types'
+import { ITemplate } from '@/types'
 
 interface IProps {
+  template: ITemplate | null
   onClickClose: () => void
   onClickCopy: () => void
   onClickIncomplete: () => void
 }
 
-const ReCartBottomModal = ({ onClickClose, onClickCopy, onClickIncomplete }: IProps) => {
+const ReCartBottomModal = ({ template, onClickClose, onClickCopy, onClickIncomplete }: IProps) => {
   return (
     <S.Wrapper>
       <S.BottomModalWrapper>
         <S.BottomModalContainer>
           <S.TitleWrapper>
-            <h3>$장바구니 N</h3>
+            <h3>{template?.name}</h3>
             <Image src='/cancel.svg' alt='cancel' width={24} height={24} onClick={onClickClose} />
           </S.TitleWrapper>
           <S.List>

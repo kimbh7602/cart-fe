@@ -19,7 +19,7 @@ import moment from 'moment'
 import _, { get } from 'lodash'
 import { useInView } from 'react-intersection-observer'
 import { useRouter } from 'next/navigation'
-import { HOME } from '@/routes'
+import { CART, HOME } from '@/routes'
 import { useAtom } from 'jotai'
 import { isLoadingAtom } from '@/store'
 import { toast } from 'react-toastify'
@@ -137,7 +137,12 @@ const CartContents = ({
           categoryName: '기타',
           count: 1,
         })
-        getBaskets()
+
+        if (selectedCategory) {
+          getCategoryBaskets()
+        } else {
+          getBaskets()
+        }
         getTemplate()
         getCategories()
       }
@@ -184,7 +189,11 @@ const CartContents = ({
           categoryName: '기타',
           count: 1,
         })
-        getBaskets()
+        if (selectedCategory) {
+          getCategoryBaskets()
+        } else {
+          getBaskets()
+        }
         getTemplate()
         getCategories()
       }
@@ -232,7 +241,7 @@ const CartContents = ({
   }
 
   const handleClickMinus = () => {
-    if (count <= 1) {
+    if (count < 1) {
       cautionToast('상품을 1개 이상 담아주세요!')
       setBasket({ ...basket, count: 1 })
       return
@@ -312,10 +321,15 @@ const CartContents = ({
   const incompleteTemplate = async () => {
     setIsLoading(true)
     try {
-      await postData({
+      const { data } = await postData({
         url: `${BASE_API}/template/${id}/copy/incomplete`,
         accessToken: accessToken,
       })
+
+      if (data?.result?.id) {
+        router.replace(`${CART}/${data?.result?.id}`)
+      }
+
       setIsLoading(false)
     } catch (e) {
       console.log(e)
@@ -326,10 +340,15 @@ const CartContents = ({
   const copyTemplate = async () => {
     setIsLoading(true)
     try {
-      await postData({
+      const { data } = await postData({
         url: `${BASE_API}/template/${id}/copy`,
         accessToken: accessToken,
       })
+
+      if (data?.result?.id) {
+        router.replace(`${CART}/${data?.result?.id}`)
+      }
+
       setIsLoading(false)
     } catch (e) {
       console.log(e)
@@ -416,7 +435,7 @@ const CartContents = ({
             isActive={isInputActive}
           />
           <S.CountWrapper>
-            {count <= 1 ? (
+            {basket?.count <= 1 ? (
               <Image src='/minus-disabled.svg' alt='minus' width={24} height={24} />
             ) : (
               <Image src='/minus.svg' alt='minus' width={24} height={24} onClick={handleClickMinus} />
@@ -454,13 +473,20 @@ const CartContents = ({
 
         <S.BasketsWrapper>
           {baskets?.map((basket, index) => (
-            <Basket key={index} basket={basket} getBaskets={getBaskets} getTemplate={getTemplate} />
+            <Basket
+              key={index}
+              basket={basket}
+              getCategoryBaskets={getCategoryBaskets}
+              getBaskets={getBaskets}
+              getTemplate={getTemplate}
+              selectedCategory={selectedCategory}
+            />
           ))}
         </S.BasketsWrapper>
       </S.CartContentsWrapper>
       {isOpen && (
         <CartBottomModal
-          isOpen={isOpen}
+          template={template}
           onClickClose={onCloseCart}
           onClickShare={onClickShare}
           onClickReCart={onClickReCart}
@@ -468,10 +494,16 @@ const CartContents = ({
         />
       )}
       {isShareOpen && (
-        <ShareBottomModal onClickClose={onCloseShare} onStopShare={onStopShare} onClickShare={shareTemplate} />
+        <ShareBottomModal
+          template={template}
+          onClickClose={onCloseShare}
+          onStopShare={onStopShare}
+          onClickShare={shareTemplate}
+        />
       )}
       {isReCartOpen && (
         <ReCartBottomModal
+          template={template}
           onClickClose={onCloseReCart}
           onClickCopy={copyTemplate}
           onClickIncomplete={incompleteTemplate}

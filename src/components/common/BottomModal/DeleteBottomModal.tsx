@@ -2,9 +2,6 @@
 
 import Image from 'next/image'
 import * as S from './BottomModal.styled'
-import { useAtom } from 'jotai'
-import { bottomModalAtom, bottomModalListAtom } from '@/store'
-import { IBottomModal } from '@/types'
 
 interface IProps {
   onClickClose: () => void

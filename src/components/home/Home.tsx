@@ -9,10 +9,12 @@ interface IHome {
   list: Array<ITemplate>
 }
 
+const FORM_LINK = 'https://forms.gle/hi3PEtVLFwHPEQVWA'
+
 const HomeComponent = ({ list }: IHome) => {
   return (
     <S.Wrapper>
-      <S.AdWrapper>
+      <S.AdWrapper href={FORM_LINK} target='_blank' rel='noopener noreferrer'>
         <Image src='/home/ad-icon.svg' alt='ad-image' width={36} height={36} />
         <S.AdText>
           <p>설문조사 참여하고</p>

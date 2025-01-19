@@ -1,4 +1,4 @@
-import { IBasket } from '@/types'
+import { IBasket, ICategories } from '@/types'
 
 import * as S from './styled'
 import Image from 'next/image'
@@ -14,10 +14,12 @@ import { getTokens } from '@/utils'
 interface IProps {
   basket: IBasket
   getBaskets: () => void
+  getCategoryBaskets: () => void
   getTemplate: () => void
+  selectedCategory: ICategories | null
 }
 
-const Basket = ({ basket, getBaskets, getTemplate }: IProps) => {
+const Basket = ({ basket, getCategoryBaskets, getBaskets, getTemplate, selectedCategory }: IProps) => {
   const router = useRouter()
   const [, setIsLoading] = useAtom(isLoadingAtom)
   const { accessToken } = getTokens()
@@ -26,7 +28,7 @@ const Basket = ({ basket, getBaskets, getTemplate }: IProps) => {
   const checkBasket = async () => {
     setIsLoading(true)
     try {
-      const { data } = await putData({
+      await putData({
         url: `${BASE_API}/basket/check`,
         body: {
           checked: !basket?.checked,
@@ -35,7 +37,11 @@ const Basket = ({ basket, getBaskets, getTemplate }: IProps) => {
         accessToken: accessToken,
       })
 
-      getBaskets()
+      if (selectedCategory) {
+        getCategoryBaskets()
+      } else {
+        getBaskets()
+      }
       getTemplate()
       setIsLoading(false)
     } catch (e: any) {

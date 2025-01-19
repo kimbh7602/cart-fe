@@ -2,25 +2,23 @@
 
 import Image from 'next/image'
 import * as S from './BottomModal.styled'
-import { useAtom } from 'jotai'
-import { bottomModalAtom, bottomModalListAtom } from '@/store'
-import { IBottomModal } from '@/types'
+import { ITemplate } from '@/types'
 
 interface IProps {
-  isOpen: boolean
+  template: ITemplate | null
   onClickClose: () => void
   onClickShare: () => void
   onClickReCart: () => void
   onClickDelete: () => void
 }
 
-const BottomModal = ({ isOpen, onClickClose, onClickShare, onClickReCart, onClickDelete }: IProps) => {
+const BottomModal = ({ template, onClickClose, onClickShare, onClickReCart, onClickDelete }: IProps) => {
   return (
     <S.Wrapper>
       <S.BottomModalWrapper>
         <S.BottomModalContainer>
           <S.TitleWrapper>
-            <h3>$장바구니 N</h3>
+            <h3>{template?.name}</h3>
             <Image src='/cancel.svg' alt='cancel' width={24} height={24} onClick={onClickClose} />
           </S.TitleWrapper>
           <S.List>
