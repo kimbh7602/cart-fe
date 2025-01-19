@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation'
 import { DELETE_ACCOUNT } from '@/routes'
 import Loader from '../common/Loader'
 import { deleteTokens } from '@/utils'
+import { CS_URL, USER_INFO_URL } from '@/constants'
 
 const MyPageContainer = () => {
   const router = useRouter()
@@ -21,6 +22,18 @@ const MyPageContainer = () => {
     setIsLoading(false)
   }
 
+  const handleClickUserInfo = () => {
+    if (typeof window === 'undefined') return
+
+    window.open(USER_INFO_URL)
+  }
+
+  const handleClickCs = () => {
+    if (typeof window === 'undefined') return
+
+    window.open(CS_URL)
+  }
+
   return (
     <>
       <S.MyPageWrapper>
@@ -29,11 +42,11 @@ const MyPageContainer = () => {
           <p>{iam?.email}</p>
         </S.MyPageTitleWrapper>
         <S.MyPageListWrapper>
-          <S.MyPageListItem>
+          <S.MyPageListItem onClick={handleClickUserInfo}>
             <p>개인정보 처리 방침</p>
             <Image src='/arrow-right-mypage.svg' alt='arrow' width={24} height={24} />
           </S.MyPageListItem>
-          <S.MyPageListItem>
+          <S.MyPageListItem onClick={handleClickCs}>
             <p>고객센터</p>
             <Image src='/arrow-right-mypage.svg' alt='arrow' width={24} height={24} />
           </S.MyPageListItem>
