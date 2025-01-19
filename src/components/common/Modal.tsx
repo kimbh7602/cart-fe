@@ -7,12 +7,12 @@ interface IModal {
   text: string
   submitButtonText: string
   onClickSubmitButton: () => void
-  hasCancelButton: boolean
-  cancelButtonText: string
-  onClickCancelButton: () => void
-  hasLink: boolean
-  linkText: string
-  onClickLink: () => void
+  hasCancelButton?: boolean
+  cancelButtonText?: string
+  onClickCancelButton?: () => void
+  hasLink?: boolean
+  linkText?: string
+  onClickLink?: () => void
 }
 
 const Modal = ({
@@ -33,7 +33,7 @@ const Modal = ({
         <S.ContentWrapper>
           <S.Title>{title}</S.Title>
           <S.Text>{text}</S.Text>
-          <S.LinkText onClick={onClickLink}>{linkText}</S.LinkText>
+          {hasLink && <S.LinkText onClick={onClickLink}>{linkText}</S.LinkText>}
         </S.ContentWrapper>
         <S.SubmitButton onClick={onClickSubmitButton}>{submitButtonText}</S.SubmitButton>
         {hasCancelButton && <S.CancelButton onClick={onClickCancelButton}>{cancelButtonText}</S.CancelButton>}

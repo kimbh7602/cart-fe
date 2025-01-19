@@ -25,11 +25,11 @@ const BottomSheet = ({ id, template }: IBottomSheet) => {
   const handleClickButton = async () => {
     setIsLoading(true)
     if (!accessToken) {
-      router.push('/')
+      router.replace('/')
       setIsLoading(false)
     } else {
       if (iam?.id === template?.userId) {
-        router.push(`${CART}/${id}`)
+        router.replace(`${CART}/${id}`)
       } else {
         try {
           const { data } = await postData({
