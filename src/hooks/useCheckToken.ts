@@ -1,6 +1,7 @@
 import { postData } from '@/api'
 import { BASE_API } from '@/constants'
 import { ERROR_CODE } from '@/constants/errors'
+import { HOME } from '@/routes'
 import { getTokens, deleteTokens, setTokens } from '@/utils'
 import { useRouter } from 'next/navigation'
 
@@ -37,6 +38,9 @@ const useCheckToken = () => {
       case ERROR_CODE.WRONG_TOKEN:
         deleteTokens()
         router.replace('/')
+        break
+      case ERROR_CODE.NO_AUTHORITY:
+        router.replace(HOME)
         break
       default:
         break

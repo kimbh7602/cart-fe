@@ -28,9 +28,6 @@ const BottomSheet = ({ id, template }: IBottomSheet) => {
       router.push('/')
       setIsLoading(false)
     } else {
-      // 사용자 본인
-      // 본인인지 확인가능한 API 필요
-      // 원본 template 으로 이동
       if (iam?.id === template?.userId) {
         router.push(`${CART}/${id}`)
       } else {

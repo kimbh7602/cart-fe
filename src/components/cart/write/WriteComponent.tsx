@@ -50,7 +50,7 @@ const WriteComponent = ({ id, template }: IProps) => {
       })
 
       successToast(`${name} 수정 완료`)
-      router.push(`${CART}/${id}`)
+      router.replace(`${CART}/${id}`)
       setIsLoading(false)
     } catch (e) {
       cautionToast('수정에 실패했어요')
