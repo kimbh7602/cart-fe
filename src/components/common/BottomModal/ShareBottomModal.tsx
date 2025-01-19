@@ -35,8 +35,8 @@ const BottomModal = ({ template, onClickClose, onStopShare, onClickShare }: IPro
     Kakao.Share.sendDefault({
       objectType: 'feed',
       content: {
-        title: '타이틀',
-        description: '설명',
+        title: '까담 - 까먹지 말고 담자',
+        description: '공유된 장바구니를 확인해보세요!',
         imageUrl: SHARED_IMAGE_URL,
         link: {
           mobileWebUrl: `${window.location.origin}/shared/${template?.id}`,
