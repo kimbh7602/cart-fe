@@ -273,6 +273,11 @@ const CartContents = ({
   }
 
   const onStopShare = async () => {
+    if (!template?.isPublic) {
+      cautionToast('이미 닫은 장바구니예요!')
+      return
+    }
+
     setIsLoading(true)
     try {
       const { data } = await putData({
@@ -329,10 +334,12 @@ const CartContents = ({
       if (data?.result?.id) {
         router.replace(`${CART}/${data?.result?.id}`)
       }
-
+      successToast('까먹은 상품만 다시 담았어요!')
       setIsLoading(false)
     } catch (e) {
       console.log(e)
+      // 모두 완료 -> api 단에서 에러로 내려줘야 할 듯
+      // cautionToast('담을 상품이 없어요')
       setIsLoading(false)
     }
   }
@@ -349,9 +356,12 @@ const CartContents = ({
         router.replace(`${CART}/${data?.result?.id}`)
       }
 
+      successToast('모든 상품을 다시 담았어요!')
       setIsLoading(false)
     } catch (e) {
       console.log(e)
+      // 빈 장바구니 -> api 단에서 에러로 내려줘야 할 듯
+      // cautionToast('장바구니가 비어있어요')
       setIsLoading(false)
     }
   }
@@ -413,10 +423,13 @@ const CartContents = ({
       }
       getTemplate()
       setIsOpen(false)
+      successToast('모든 상품을 완료했어요!')
       setIsLoading(false)
     } catch (e: any) {
       console.log(e)
       checkToken(e?.response?.data?.code)
+      // 모두 완료 or 빈 장바구니
+      // cautionToast('완료할 상품이 없어요')
       setIsOpen(false)
       setIsLoading(false)
     }

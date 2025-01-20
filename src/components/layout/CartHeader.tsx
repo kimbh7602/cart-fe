@@ -6,14 +6,24 @@ import { useRouter } from 'next/navigation'
 
 interface ICartHeader {
   setIsOpen: (args: boolean) => void
+  onClick?: () => void
 }
 
-const CartHeader = ({ setIsOpen }: ICartHeader) => {
+const CartHeader = ({ setIsOpen, onClick }: ICartHeader) => {
   const router = useRouter()
+
+  const handleClickBack = () => {
+    if (onClick) {
+      onClick()
+      return
+    }
+
+    router.back()
+  }
 
   return (
     <S.CartHeaderWrapper>
-      <S.IconWrapper onClick={() => router.back()}>
+      <S.IconWrapper onClick={handleClickBack}>
         <Image src='/arrow-left.svg' alt='arrow-left' width={32} height={32} />
       </S.IconWrapper>
       <S.IconWrapper>

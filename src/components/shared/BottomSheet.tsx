@@ -1,4 +1,4 @@
-import { getTokens } from '@/utils'
+import { getTokens, successToast } from '@/utils'
 import * as S from './styled'
 import { useRouter } from 'next/navigation'
 import { postData } from '@/api'
@@ -38,6 +38,7 @@ const BottomSheet = ({ id, template }: IBottomSheet) => {
           })
 
           if (data?.result?.id) {
+            successToast('까먹지 않도록 담아드렸어요!')
             router?.push(`${CART}/${data?.result?.id}`)
           }
         } catch (e: any) {

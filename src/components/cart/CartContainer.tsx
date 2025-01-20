@@ -12,12 +12,15 @@ import { isLoadingAtom } from '@/store'
 import Loader from '@/components/common/Loader'
 import useCheckToken from '@/hooks/useCheckToken'
 import { getTokens } from '@/utils'
+import { useRouter } from 'next/navigation'
+import { HOME } from '@/routes'
 
 interface IProps {
   id: string
 }
 
 const CartContainer = ({ id }: IProps) => {
+  const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
   const [isShareOpen, setIsShareOpen] = useState(false)
   const [isReCartOpen, setIsReCartOpen] = useState(false)
@@ -44,6 +47,10 @@ const CartContainer = ({ id }: IProps) => {
     }
   }
 
+  const onClick = () => {
+    router.push(HOME)
+  }
+
   useEffect(() => {
     if (id) {
       getTemplate()
@@ -52,7 +59,7 @@ const CartContainer = ({ id }: IProps) => {
 
   return (
     <>
-      <CartHeader setIsOpen={setIsOpen} />
+      <CartHeader setIsOpen={setIsOpen} onClick={onClick} />
       <CartTitle template={template} id={id} isDeleteOpen={isDeleteOpen} setIsDeleteOpen={setIsDeleteOpen} />
       <CartContents
         id={id}
