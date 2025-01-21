@@ -32,6 +32,7 @@ const RootLayout = async ({
 }>) => {
   return (
     <html lang='ko'>
+      <meta name='mobile-web-app-capable' content='yes' />
       <body>
         <StylesProvider>
           <RootProvider>
