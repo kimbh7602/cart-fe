@@ -7,13 +7,14 @@ import { useRouter } from 'next/navigation'
 interface IProps {
   hasTrash?: boolean
   onClickTrash?: () => void
+  hasBorderBottom?: boolean
 }
 
-const WriteHeader = ({ hasTrash, onClickTrash }: IProps) => {
+const WriteHeader = ({ hasTrash, onClickTrash, hasBorderBottom = false }: IProps) => {
   const router = useRouter()
 
   return (
-    <S.WriteHeaderWrapper>
+    <S.WriteHeaderWrapper $hasBorderBottom={hasBorderBottom}>
       <S.IconWrapper onClick={() => router.back()}>
         <Image src='/cart/arrow-left.svg' alt='arrow-left' width={32} height={32} />
       </S.IconWrapper>

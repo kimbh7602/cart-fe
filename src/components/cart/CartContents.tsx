@@ -19,7 +19,7 @@ import moment from 'moment'
 import _, { get } from 'lodash'
 import { useInView } from 'react-intersection-observer'
 import { useRouter } from 'next/navigation'
-import { CART, HOME } from '@/routes'
+import { CART, CART_EDIT, HOME } from '@/routes'
 import { useAtom } from 'jotai'
 import { isLoadingAtom } from '@/store'
 import { toast } from 'react-toastify'
@@ -435,6 +435,10 @@ const CartContents = ({
     }
   }
 
+  const handleClickEdit = () => {
+    router?.push(`${CART_EDIT}/${id}`)
+  }
+
   useEffect(() => {
     if (id) {
       getBaskets()
@@ -463,7 +467,10 @@ const CartContents = ({
       <S.CartContentsWrapper>
         <S.CartContentTitle>
           <p>{moment(template?.createTime).format('YYYY년 M월 D일')}에 만들고</p>
-          <h3>지금까지 {template?.percent}% 완료했어요</h3>
+          <S.CartEditWrapper>
+            <h3>지금까지 {template?.percent}% 완료했어요</h3>
+            <S.EditButton onClick={handleClickEdit}>리스트 편집</S.EditButton>
+          </S.CartEditWrapper>
         </S.CartContentTitle>
         <Tab tabs={categories} selectedTab={selectedCategory} setSelectedTab={handleClickTab} />
         <S.CartInputWrapper>

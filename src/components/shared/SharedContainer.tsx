@@ -15,6 +15,8 @@ import { getTokens } from '@/utils'
 import SharedContents from './SharedContents'
 import SharedTitle from './SharedTitle'
 import BottomSheet from './BottomSheet'
+import { ERROR_CODE } from '@/constants/errors'
+import NotShared from './NotShared'
 
 interface IProps {
   id: string
@@ -33,6 +35,7 @@ const SharedContainer = ({ id }: IProps) => {
     categoryName: '기타',
     count: 1,
   })
+  const [isShared, setIsShared] = useState(true)
 
   const getBaskets = useCallback(async () => {
     setIsLoading(true)
@@ -45,6 +48,9 @@ const SharedContainer = ({ id }: IProps) => {
       setTemplate(data?.template)
       setIsLoading(false)
     } catch (e: any) {
+      if (e?.response?.data?.code === ERROR_CODE.NOT_SHARED) {
+        setIsShared(false)
+      }
       console.log(e)
       setIsLoading(false)
     }
@@ -56,26 +62,29 @@ const SharedContainer = ({ id }: IProps) => {
     }
   }, [id])
 
-  // useEffect(() => {
-  //   document.body.style.overflow = 'hidden'
-  //   return () => {
-  //     document.body.style.overflow = 'unset'
-  //   }
-  // }, [])
-
   return (
     <>
-      <SharedTitle template={template} id={id} isDeleteOpen={isDeleteOpen} setIsDeleteOpen={setIsDeleteOpen} />
-      <SharedContents
-        id={id}
+      <SharedTitle
         template={template}
-        getBaskets={getBaskets}
-        baskets={baskets}
-        setBaskets={setBaskets}
-        basket={basket}
-        setBasket={setBasket}
+        id={id}
+        isDeleteOpen={isDeleteOpen}
+        setIsDeleteOpen={setIsDeleteOpen}
+        isShared={isShared}
       />
-      <BottomSheet id={id} template={template} />
+      {isShared ? (
+        <SharedContents
+          id={id}
+          template={template}
+          getBaskets={getBaskets}
+          baskets={baskets}
+          setBaskets={setBaskets}
+          basket={basket}
+          setBasket={setBasket}
+        />
+      ) : (
+        <NotShared />
+      )}
+      <BottomSheet id={id} template={template} isShared={isShared} />
       {isLoading && <Loader />}
     </>
   )

@@ -50,7 +50,7 @@ const BottomModal = ({ template, onClickClose, onStopShare, onClickShare }: IPro
   const handleClickShareX = () => {
     if (typeof window === 'undefined') return
 
-    const text = '텍스트텍스트 내용내용'
+    const text = '[까담 - 까먹지 말고 담자] 공유된 장바구니를 확인해보세요!'
 
     window.open(
       'https://twitter.com/intent/tweet?text=' + text + '&url=' + `${window.location.origin}/shared/${template?.id}`,

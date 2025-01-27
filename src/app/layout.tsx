@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import StylesProvider from '@/styles/stylesProvider'
 import Script from 'next/script'
 import { SHARED_IMAGE_URL } from '@/constants'
-import RootProvider from '@/components/common/RootProvieder'
+import RootProvider from '@/components/common/RootProvider'
 
 export const metadata: Metadata = {
   title: '까담 - 까먹지 말고 담자',
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: '까담 - 까먹지 말고 담자',
     description: '공유된 장바구니를 확인해보세요!',
-    // creator: '@kka',
+    // creator: '@kka-dam',
     images: [SHARED_IMAGE_URL],
   },
 }

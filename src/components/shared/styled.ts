@@ -34,19 +34,19 @@ export const CartTitle = styled.div`
   }
 `
 
-export const ShareBadge = styled.div<{ $isPublic: boolean | undefined }>`
+export const ShareBadge = styled.div<{ $isShared: boolean | undefined }>`
   display: flex;
   align-items: center;
   justify-content: center;
 
   p {
-    color: ${({ $isPublic, theme }) => ($isPublic ? theme.green_scale.green_500 : theme.green_scale.green_400)};
+    color: ${({ $isShared, theme }) => ($isShared ? theme.green_scale.green_500 : theme.green_scale.green_100)};
     font-size: 12px;
     font-weight: 500;
     line-height: 18px;
     padding: 4px 8px;
     border-radius: 8px;
-    background: ${({ $isPublic, theme }) => ($isPublic ? theme.green_scale.green_50 : theme.green_scale.green_100)};
+    background: ${({ $isShared, theme }) => ($isShared ? theme.green_scale.green_50 : theme.green_scale.green_400)};
   }
 `
 
@@ -255,6 +255,35 @@ export const BottomButton = styled.button`
   text-align: center;
   font-size: 14px;
   font-weight: 700;
+  line-height: 20px;
+  letter-spacing: -0.2px;
+`
+
+export const EmptyWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: calc(100% - 48px);
+`
+
+export const EmptyTitle = styled.h3`
+  color: ${({ theme }) => theme.gray_scale.gray_500};
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 28px; /* 140% */
+  letter-spacing: -0.6px;
+  margin: 16px 0 4px 0;
+`
+
+export const EmptyText = styled.p`
+  color: ${({ theme }) => theme.gray_scale.gray_300};
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
   line-height: 20px;
   letter-spacing: -0.2px;
 `

@@ -48,9 +48,9 @@ export const patchData = (action: ActionType) => {
 }
 
 export const deleteData = (action: ActionType) => {
-  const { url } = action
+  const { url, body } = action
   const headers = getRequestHeaders(action)
-  return api().delete(url, { headers })
+  return api().delete(url, { headers, data: body })
 }
 
 export default api

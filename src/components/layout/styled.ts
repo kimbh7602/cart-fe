@@ -27,7 +27,7 @@ export const CartHeaderWrapper = styled.div`
   z-index: 10;
 `
 
-export const WriteHeaderWrapper = styled.div`
+export const WriteHeaderWrapper = styled.div<{ $hasBorderBottom?: boolean }>`
   position: sticky;
   top: 0;
   left: 0;
@@ -39,6 +39,7 @@ export const WriteHeaderWrapper = styled.div`
   height: 48px;
   background: ${({ theme }) => theme.white};
   z-index: 10;
+  border-bottom: ${({ theme, $hasBorderBottom }) => $hasBorderBottom && `1px solid ${theme.gray_scale.gray_50}`};
 `
 
 export const IconWrapper = styled.div`

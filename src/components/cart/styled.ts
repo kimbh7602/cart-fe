@@ -100,6 +100,12 @@ export const CartContentTitle = styled.div`
   }
 `
 
+export const CartEditWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`
+
 export const CartInputWrapper = styled.div`
   display: grid;
   grid-template-columns: auto 96px;
@@ -173,7 +179,7 @@ export const BasketLeft = styled.div`
 
 export const BasketRight = styled.div`
   display: grid;
-  grid-template-columns: 48px 20px;
+  grid-template-columns: auto 37px;
   align-items: center;
   gap: 8px;
 `
@@ -224,4 +230,17 @@ export const Gradient = styled.div`
   opacity: 0.7;
   background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #fff 100%);
   pointer-events: none;
+`
+
+export const EditButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  border-radius: 8px;
+  background: ${({ theme }) => theme.gray_scale.gray_30};
+  color: ${({ theme }) => theme.gray_scale.gray_200};
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
 `

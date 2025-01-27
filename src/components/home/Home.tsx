@@ -17,8 +17,8 @@ const HomeComponent = ({ list }: IHome) => {
       <S.AdWrapper href={FORM_LINK} target='_blank' rel='noopener noreferrer'>
         <Image src='/home/ad-icon.svg' alt='ad-image' width={36} height={36} />
         <S.AdText>
-          <p>설문조사 참여하고</p>
-          <b>스타벅스 커피 쿠폰 받기</b>
+          <p>까담은 지금 의견 담는 중</p>
+          <b>설문 참여하고 커피 쿠폰 받자!</b>
         </S.AdText>
         <Image src='/arrow-right.svg' alt='arrow' width={24} height={24} />
       </S.AdWrapper>

@@ -65,9 +65,9 @@ const Basket = ({ basket, getCategoryBaskets, getBaskets, getTemplate, selectedC
         )}
         <h4>{basket?.name}</h4>
       </S.BasketLeft>
-      <S.BasketRight onClick={writeBasket}>
+      <S.BasketRight>
         <p>{basket?.count}</p>
-        <Image src='/edit.svg' alt='edit' width={20} height={20} />
+        <S.EditButton onClick={writeBasket}>수정</S.EditButton>
       </S.BasketRight>
     </S.BasketWrapper>
   )

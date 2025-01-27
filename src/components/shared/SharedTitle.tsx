@@ -14,9 +14,10 @@ interface ITitle {
   id: string
   isDeleteOpen: boolean
   setIsDeleteOpen: (args: boolean) => void
+  isShared: boolean
 }
 
-const SharedTitle = ({ template, id, isDeleteOpen, setIsDeleteOpen }: ITitle) => {
+const SharedTitle = ({ template, id, isDeleteOpen, setIsDeleteOpen, isShared }: ITitle) => {
   const router = useRouter()
 
   const writeCart = () => {
@@ -28,9 +29,7 @@ const SharedTitle = ({ template, id, isDeleteOpen, setIsDeleteOpen }: ITitle) =>
       <S.CartTitle>
         <Image src={getIconSrc(template?.thumbnailIndex)} alt='cart-image' width={56} height={56} />
         <h3>까담</h3>
-        <S.ShareBadge $isPublic={template?.isPublic}>
-          <p>보기 전용</p>
-        </S.ShareBadge>
+        <S.ShareBadge $isShared={isShared}>{isShared ? <p>보기 전용</p> : <p>비공개</p>}</S.ShareBadge>
       </S.CartTitle>
     </S.CartTitleWrapper>
   )

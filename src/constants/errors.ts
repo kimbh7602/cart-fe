@@ -3,4 +3,5 @@ export const ERROR_CODE = {
   EMPTY_TOKEN: 'E_401_002',
   WRONG_TOKEN: 'E_401_003',
   NO_AUTHORITY: 'E_403_000',
+  NOT_SHARED: 'E_403_001',
 }
