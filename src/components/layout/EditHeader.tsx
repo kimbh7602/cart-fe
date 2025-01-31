@@ -28,13 +28,9 @@ const EditHeader = ({ baskets, basketIds, setBasketIds }: IProps) => {
       <S.IconWrapper onClick={() => router.back()}>
         <Image src='/cart/arrow-left.svg' alt='arrow-left' width={32} height={32} />
       </S.IconWrapper>
-      <S.IconWrapper onClick={handleClickSelectAll}>
-        {basketIds?.length > 0 ? (
-          <Image src='/cart/unselect-all-icon.svg' alt='select-all' width={48} height={48} />
-        ) : (
-          <Image src='/cart/select-all-icon.svg' alt='select-all' width={48} height={48} />
-        )}
-      </S.IconWrapper>
+      <S.HeaderSelectButton onClick={handleClickSelectAll}>
+        {basketIds?.length > 0 ? <>전체 해제</> : <>전체 선택</>}
+      </S.HeaderSelectButton>
     </S.WriteHeaderWrapper>
   )
 }

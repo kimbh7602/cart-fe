@@ -51,3 +51,18 @@ export const IconWrapper = styled.div`
   padding: 8px;
   cursor: pointer;
 `
+
+export const HeaderSelectButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  margin-right: 8px;
+  border-radius: 8px;
+  background: ${({ theme }) => theme.gray_scale.gray_50};
+  color: ${({ theme }) => theme.gray_scale.gray_400};
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  cursor: pointer;
+`
