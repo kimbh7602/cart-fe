@@ -38,7 +38,7 @@ const Cart = ({ template }: ICart) => {
           <h4>{template?.name}</h4>
           <p>
             {template?.preview?.map((item, idx) => (
-              <span key={idx}>{item}</span>
+              <span key={idx}>{item} </span>
             ))}
           </p>
         </S.ContentText>
