@@ -12,6 +12,7 @@ import { BASE_API } from '@/constants'
 import { useRouter } from 'next/navigation'
 import { CART } from '@/routes'
 import { cautionToast, getIconSrc, getTokens, successToast } from '@/utils'
+import _ from 'lodash'
 
 interface IProps {
   id: string
@@ -28,6 +29,8 @@ const WriteComponent = ({ id, template }: IProps) => {
   const ICON_LIST = Array.from({ length: 16 }, (_, i) => i + 1)
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!_.isEmpty(event?.target?.value) && _.isEmpty(event?.target?.value?.trim())) return
+
     let value = event?.target?.value
 
     if (value?.length > 30) {

@@ -13,6 +13,7 @@ import { useAtom } from 'jotai'
 import { isLoadingAtom } from '@/store'
 import { cautionToast, getTokens, successToast } from '@/utils'
 import useCheckToken from '@/hooks/useCheckToken'
+import _ from 'lodash'
 
 interface IProps {
   id: string
@@ -32,6 +33,8 @@ const WriteComponent = ({ id, basket, isDeleteOpen, setIsDeleteOpen }: IProps) =
   const { checkToken } = useCheckToken()
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!_.isEmpty(event?.target?.value) && _.isEmpty(event?.target?.value?.trim())) return
+
     setName(event?.target?.value)
   }
 
