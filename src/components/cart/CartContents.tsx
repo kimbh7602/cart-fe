@@ -112,6 +112,8 @@ const CartContents = ({
   }
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!_.isEmpty(event?.target?.value) && _.isEmpty(event?.target?.value?.trim())) return
+
     setBasket({ ...basket, name: event?.target?.value })
   }
 

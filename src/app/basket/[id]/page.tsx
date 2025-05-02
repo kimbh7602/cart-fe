@@ -9,8 +9,11 @@ import { useCallback, useEffect, useState } from 'react'
 import { useAtom } from 'jotai'
 import { isLoadingAtom } from '@/store'
 import Loader from '@/components/common/Loader'
-import { getTokens } from '@/utils'
+import { cautionToast, getTokens } from '@/utils'
 import useCheckToken from '@/hooks/useCheckToken'
+import { ERROR_CODE } from '@/constants/errors'
+import { useRouter } from 'next/navigation'
+import { HOME } from '@/routes'
 
 interface PageProps {
   params: {
@@ -24,6 +27,7 @@ const Write = ({ params }: PageProps) => {
   const [isLoading, setIsLoading] = useAtom(isLoadingAtom)
   const { accessToken } = getTokens()
   const { checkToken } = useCheckToken()
+  const router = useRouter()
 
   const getTemplate = useCallback(async () => {
     setIsLoading(true)
@@ -37,6 +41,11 @@ const Write = ({ params }: PageProps) => {
       setIsLoading(false)
     } catch (e: any) {
       console.log(e)
+      if (e?.response?.data?.code === ERROR_CODE.NOT_EXIST_BASKET) {
+        cautionToast(e?.response?.data?.message)
+        router.replace(HOME)
+      }
+
       checkToken(e?.response?.data?.code)
       setIsLoading(false)
     }
