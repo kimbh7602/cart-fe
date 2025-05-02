@@ -17,7 +17,6 @@ import { deleteData, fetchData, postData, putData } from '@/api'
 import { BASE_API } from '@/constants'
 import moment from 'moment'
 import _, { get } from 'lodash'
-import { useInView } from 'react-intersection-observer'
 import { useRouter } from 'next/navigation'
 import { CART, CART_EDIT, HOME } from '@/routes'
 import { useAtom } from 'jotai'
@@ -153,20 +152,24 @@ const CartContents = ({
     }
   }
 
-  const searchKeywords = useCallback(async () => {
+  const searchKeywords = async (searchTerm: string) => {
     try {
       const { data } = await fetchData({
-        url: `${BASE_API}/search?keyword=${basket?.name}`,
+        url: `${BASE_API}/search?keyword=${searchTerm}`,
         accessToken: accessToken,
       })
 
-      console.log(data)
       setKeywords(data?.result)
     } catch (e: any) {
       console.log(e)
       checkToken(e?.response?.data?.code)
     }
-  }, [basket?.name])
+  }
+
+  const debouncedSearch = useCallback(
+    _.debounce((searchTerm: string) => searchKeywords(searchTerm), 500), // 500ms 대기
+    [],
+  )
 
   const handleClickKeyword = async (keyword: { name: string; category: string }) => {
     setIsLoading(true)
@@ -450,9 +453,11 @@ const CartContents = ({
     if (_.isEmpty(basket?.name)) {
       setKeywords([])
     } else {
-      searchKeywords()
+      debouncedSearch(basket?.name)
     }
-  }, [basket?.name, searchKeywords])
+
+    return () => debouncedSearch.cancel()
+  }, [basket?.name, debouncedSearch])
 
   useEffect(() => {
     if (selectedCategory) {
