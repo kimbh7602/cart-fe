@@ -1,12 +1,48 @@
+import { motion } from 'motion/react'
 import Image from 'next/image'
 import styled from 'styled-components'
 
-export const Wrapper = styled.div`
+export const Wrapper = styled(motion.div)`
   display: flex;
   flex-direction: column;
   gap: 4px;
   width: 100%;
   padding: 16px 20px 32px 20px;
+  overflow-x: hidden;
+`
+
+export const SwipeableContainer = styled(motion.div)`
+  position: relative;
+  width: 100%;
+  height: 100%;
+`
+
+export const InnerContainer = styled.div<{ $isShared?: boolean }>`
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: ${({ $isShared }) => ($isShared ? '56px auto 56px' : '56px auto')};
+  gap: 16px;
+`
+
+export const Buttons = styled(motion.div)`
+  display: grid;
+  grid-template-columns: 36px 36px;
+  gap: 8px;
+  /* place-content: center; */
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  /* width: 64px; */
+  /* aspect-ratio: 1 /1; */
+  /* background: red; */
+`
+
+export const IconButton = styled(motion.div)`
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
 `
 
 export const EmptyWrapper = styled.div`
@@ -72,13 +108,12 @@ export const AdText = styled.div`
   }
 `
 
-export const ContentWrapper = styled.div<{ $isShared?: boolean }>`
-  display: grid;
-  grid-template-columns: ${({ $isShared }) => ($isShared ? '56px auto 56px' : '56px auto')};
-  gap: 16px;
+export const ContentWrapper = styled(motion.div)`
+  position: relative;
   width: 100%;
   padding: 8px;
   cursor: pointer;
+  user-select: none;
 `
 
 export const ProgressCircle = styled.div<{ $value: number }>`

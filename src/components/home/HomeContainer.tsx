@@ -17,6 +17,7 @@ import useCheckToken from '@/hooks/useCheckToken'
 const PREVIEW_COUNT = 3
 
 const HomeContainer = () => {
+  const [pinnedList, setPinnedList] = useState<Array<ITemplate>>([])
   const [list, setList] = useState<Array<ITemplate>>([])
   const [isLoading, setIsLoading] = useAtom(isLoadingAtom)
   const [isLoaded, setIsLoaded] = useState(false)
@@ -31,6 +32,7 @@ const HomeContainer = () => {
         accessToken: accessToken,
       })
 
+      setPinnedList(data?.pinned)
       setList(data?.result)
       setIsLoading(false)
       setIsLoaded(true)
@@ -48,7 +50,7 @@ const HomeContainer = () => {
 
   return (
     <>
-      {_.isEmpty(list) ? <Empty /> : <HomeComponent list={list} />}
+      {_.isEmpty(list) ? <Empty /> : <HomeComponent list={list} pinnedList={pinnedList} />}
       <AddButton list={list} setList={setList} />
       {isLoading && <Loader />}
     </>
